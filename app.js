@@ -1,5 +1,6 @@
 const express = require('express');
 const serverless = require('serverless-http');
+const bodyParser = require('body-parser');
 const app = express();
 const tasks = require('./routes/tasks');
 const connectDB = require('./dataBase/conect');
@@ -24,5 +25,8 @@ app.use(errorHandlerMiddleware);
 //     }
 // }
 // start()
+app.use(bodyParser.json());
+app.use('/.netlify/functions/server', router);  // path must route to lambda
+module.exports = app;
 module.exports.handler = serverless(app);
 
